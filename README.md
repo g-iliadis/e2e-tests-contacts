@@ -1,16 +1,16 @@
-# 🧪 Playwright E2E Test Suite
+# Playwright E2E Test Suite
 
-## 🚀 Features
+## Features
 
-- ✅ **Page Object Model** with clean separation of concerns
-- 🌍 Centralized API and UI test logic
-- 💅 Faker-powered data generation
-- 🧪 Tests split into API and UI layers
-- 🧱 Reusable locator and component structure
+- **Page Object Model** with clean separation of concerns
+- Centralized API and UI test logic
+- Faker-powered data generation
+- Tests split into API and UI layers
+- Reusable locator and component structure
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```bash
 ├── tests/
@@ -32,7 +32,7 @@
 
 ---
 
-## 🛠️ Setup & Installation
+## Setup & Installation
 
 ```bash
 # 1. Clone the repo
@@ -47,7 +47,7 @@ npx playwright install
 
 ---
 
-## 🧪 Running Tests
+## Running Tests
 
 ### Run all tests
 ```bash
@@ -65,13 +65,7 @@ npx playwright test tests/specs/ui/login.spec.js
 ```
 ---
 
-## 🧙‍♂️ Faker Integration
-
-All dynamic test data is generated with [`@faker-js/faker`](https://www.npmjs.com/package/@faker-js/faker), ensuring your test coverage remains diverse and real-world.
-
----
-
-## 📊 Reporting
+## Reporting
 
 After test run, view HTML report:
 ```bash
