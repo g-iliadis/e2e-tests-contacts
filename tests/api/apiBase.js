@@ -1,5 +1,5 @@
 import { BASE_URL } from "../../playwright.config";
-import { URIS } from "./constants/URIS";
+import { URIS } from "./constants/uris";
 
 
 export async function createUser(requestContext, userData) {
