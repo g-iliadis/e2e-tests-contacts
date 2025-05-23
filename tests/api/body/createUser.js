@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-export function createUserValidBody() {
+export async function createUserValidBody() {
   return {
     firstName: faker.internet.username(),
     lastName: faker.person.lastName(),
@@ -9,7 +9,7 @@ export function createUserValidBody() {
   };
 }
 
-export function createUserInvalidEmailBody() {
+export async function createUserInvalidEmailBody() {
   return {
     firstName: 'Test',
     lastName: 'User',
@@ -18,7 +18,7 @@ export function createUserInvalidEmailBody() {
   };
 }
 
-export function createUserLongPasswordBody() {
+export async function createUserLongPasswordBody() {
   return {
     firstName: 'Test',
     lastName: 'User',

@@ -6,11 +6,13 @@ export class AddContact {
     this.locators = new AddContactLocators(page);
   }
 
-  async fillContactForm(contact) {
+  async openContactForm() {
     await this.locators.addButton.click();
-    await this.locators.nameInput.fill(
-      contact.firstName + " " + contact.lastName
-    );
+  }
+
+  async fillContactForm(contact) {
+    await this.locators.firstNameInput.fill(contact.firstName);
+    await this.locators.lastNameInput.fill(contact.lastName);
     await this.locators.phoneInput.fill(contact.phone);
     await this.locators.birthdateInput.fill(contact.birthdate);
     await this.locators.emailInput.fill(contact.email);
@@ -24,5 +26,11 @@ export class AddContact {
 
   async saveContact() {
     await this.locators.saveButton.click();
+  }
+
+  async addContact(contact) {
+    await this.openContactForm();
+    await this.fillContactForm(contact);
+    await this.saveContact();
   }
 }
