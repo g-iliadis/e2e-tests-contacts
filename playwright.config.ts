@@ -1,6 +1,6 @@
-import { defineConfig } from '@playwright/test';
+import { defineConfig } from "@playwright/test";
 
-export const BASE_URL = 'https://thinking-tester-contact-list.herokuapp.com/';
+export const BASE_URL = "https://thinking-tester-contact-list.herokuapp.com/";
 
 export default defineConfig({
   use: {
@@ -8,5 +8,6 @@ export default defineConfig({
     headless: true,
     viewport: { width: 1280, height: 720 },
   },
-  testDir: './tests',
+  reporter: [["html", { outputFolder: "playwright-report", open: "never" }]],
+  testDir: "./tests",
 });

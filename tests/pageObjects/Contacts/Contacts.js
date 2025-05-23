@@ -29,6 +29,6 @@ export class Contacts {
   }
 
   async entryDeleted(name) {
-    await expect(this.locators.contactList.filter({ hasText: name })).toHaveLength(0);
+    await expect(this.locators.contactList.filter({ hasText: name })).toHaveCount(0);;
   }
 }
