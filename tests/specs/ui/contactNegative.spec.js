@@ -1,30 +1,31 @@
 import { test, expect, request } from "@playwright/test";
 import { Login } from "../../pageObjects/Login/Login";
 import { Contacts } from "../../pageObjects/Contacts/Contacts";
-import { AddContact } from "../../pageObjects/AddContact/AddContact";
 import { createUserValidBody } from "../../api/body/createUser";
+import { AddContact } from "../../pageObjects/AddContact/AddContact";
 import { createUser } from "../../api/apiBase";
 import { createInvalidDobContactBody } from "../../api/body/createContact";
 
 test("Cannot add contact with invalid date of birth", async ({ page }) => {
-  const user = createUserValidBody();
-  const contact = createInvalidDobContactBody();
+  const user = await createUserValidBody();
+  const contact = await createInvalidDobContactBody();
 
   const context = await request.newContext();
   const res = await createUser(context, user);
   expect(res.ok()).toBeTruthy();
 
-  const login = new Login(page);
-  const contacts = new Contacts(page);
+  const loginPage = new Login(page);
+  await loginPage.goto();
+  await loginPage.login(user.email, user.password);
+
+  const contactsPage = new Contacts(page);
+  await contactsPage.isLoaded();
+
   const addContact = new AddContact(page);
-
-  await login.goto();
-  await login.login(user.email, user.password);
-  await contacts.isLoaded();
-
+  console.log("Contact:", contact);
   await addContact.addContact(contact);
 
-  const errorMessage = page.locator(".error-message");
+  const errorMessage = page.locator("#error");
   await expect(errorMessage).toBeVisible();
-  await expect(errorMessage).toHaveText("Birthdate is invalid");
+  await expect(errorMessage).toHaveText("Contact validation failed: birthdate: Birthdate is invalid");
 });
