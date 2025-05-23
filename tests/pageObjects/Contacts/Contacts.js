@@ -1,4 +1,5 @@
-import { ContactsLocators } from './ContactsLocators';
+import { expect } from "@playwright/test";
+import { ContactsLocators } from "./ContactsLocators";
 
 export class Contacts {
   constructor(page) {
@@ -10,7 +11,24 @@ export class Contacts {
     await this.locators.addContactButton.waitFor();
   }
 
-  async contactExists(name) {
-    return this.locators.contactList.locator(`text=${name}`).isVisible();
+  async openContactByName(name) {
+    const row = this.locators.contactList.filter({ hasText: name });
+    await row.first().click();
+    await expect(this.page).toHaveURL(/.*contactDetails/);
+  }
+
+  async deleteContact(name) {
+    this.page.once("dialog", async (dialog) => {
+      await dialog.accept();
+    });
+
+    await this.locators.deleteButton.click();
+
+    await expect(this.page).toHaveURL(/.*contactList/);
+    await this.entryDeleted(name);
+  }
+
+  async entryDeleted(name) {
+    await expect(this.locators.contactList.filter({ hasText: name })).toHaveLength(0);
   }
 }

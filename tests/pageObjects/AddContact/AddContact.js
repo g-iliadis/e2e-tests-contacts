@@ -1,4 +1,5 @@
 import { AddContactLocators } from "./AddContactLocators";
+import { expect } from "@playwright/test";
 
 export class AddContact {
   constructor(page) {
@@ -32,5 +33,21 @@ export class AddContact {
     await this.openContactForm();
     await this.fillContactForm(contact);
     await this.saveContact();
+  }
+
+  async selectedContactAddedToTable(contact) {
+    const row = this.page.locator("table#myTable tr", {
+      hasText: `${contact.firstName} ${contact.lastName}`,
+    });
+
+    await expect(row).toBeVisible();
+    await expect(row).toContainText(contact.birthdate);
+    await expect(row).toContainText(contact.email.toLowerCase());
+    await expect(row).toContainText(contact.phone);
+    await expect(row).toContainText(contact.street1);
+    await expect(row).toContainText(
+      `${contact.city} ${contact.stateProvince} ${contact.postalCode}`
+    );
+    await expect(row).toContainText(contact.country);
   }
 }

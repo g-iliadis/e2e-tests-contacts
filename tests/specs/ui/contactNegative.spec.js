@@ -5,6 +5,7 @@ import { createUserValidBody } from "../../api/body/createUser";
 import { AddContact } from "../../pageObjects/AddContact/AddContact";
 import { createUser } from "../../api/apiBase";
 import { createInvalidDobContactBody } from "../../api/body/createContact";
+import { CommonErrors } from "../../common/CommonErrors";
 
 test("Cannot add contact with invalid date of birth", async ({ page }) => {
   const user = await createUserValidBody();
@@ -25,7 +26,6 @@ test("Cannot add contact with invalid date of birth", async ({ page }) => {
   console.log("Contact:", contact);
   await addContact.addContact(contact);
 
-  const errorMessage = page.locator("#error");
-  await expect(errorMessage).toBeVisible();
-  await expect(errorMessage).toHaveText("Contact validation failed: birthdate: Birthdate is invalid");
+  const errors = new CommonErrors(page);
+  await errors.expectInvalidBirthdateError();
 });

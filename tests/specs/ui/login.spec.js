@@ -1,4 +1,4 @@
-import { test, expect, request } from "@playwright/test";
+import { test, expect, request, errors } from "@playwright/test";
 import { Login } from "../../pageObjects/Login/Login";
 import { Contacts } from "../../pageObjects/Contacts/Contacts";
 import { createUserValidBody } from "../../api/body/createUser";
@@ -18,19 +18,18 @@ test.describe("Login", () => {
   test.beforeEach(async ({ page }) => {
     login = new Login(page);
     contacts = new Contacts(page);
+    errors = new CommonErrors(page);
     await login.goto();
   });
 
-  test("User can login with valid credentials", async ({ page }) => {
+  test("User can login with valid credentials - Positive", async ({ page }) => {
     await login.login(user.email, user.password);
     await contacts.isLoaded();
     await expect(page).toHaveURL(/.*contactList/);
   });
 
-  test("User sees error with invalid credentials", async ({ page }) => {
+  test("User sees error with invalid credentials - Negative", async ({ page }) => {
     await login.login("wrong@example.com", "wrongpass");
-    const errorMessage = page.locator("#error");
-    await expect(errorMessage).toBeVisible();
-    await expect(errorMessage).toHaveText("Incorrect username or password");
+    await errors.expectInvalidBirthdateError();
   });
 });

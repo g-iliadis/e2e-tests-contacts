@@ -24,18 +24,5 @@ test("Sign up, add contact, and validate on detail page", async ({ page }) => {
   const addContact = new AddContact(page);
   console.log("Contact:", contact);
   await addContact.addContact(contact);
-
-  const row = page.locator("table#myTable tr", {
-    hasText: `${contact.firstName} ${contact.lastName}`,
-  });
-
-  await expect(row).toBeVisible();
-  await expect(row).toContainText(contact.birthdate);
-  await expect(row).toContainText(contact.email.toLowerCase());
-  await expect(row).toContainText(contact.phone);
-  await expect(row).toContainText(contact.street1);
-  await expect(row).toContainText(
-    `${contact.city} ${contact.stateProvince} ${contact.postalCode}`
-  );
-  await expect(row).toContainText(contact.country);
+  await addContact.selectedContactAddedToTable(contact);
 });

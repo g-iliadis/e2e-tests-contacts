@@ -8,3 +8,12 @@ export async function createUser(requestContext, userData) {
   });
   return response;
 }
+
+export async function createContact(requestContext, contact, token) {
+  return await requestContext.post(`${BASE_URL}${URIS.CREATE_CONTACT}`, {
+    data: contact,
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+}
