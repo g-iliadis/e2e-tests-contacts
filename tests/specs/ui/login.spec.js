@@ -8,9 +8,11 @@ import { CommonErrors } from "../../common/CommonErrors";
 test.describe("Login", () => {
   let login;
   let contacts;
-  const user = createUserValidBody();
+  let errors;
+  let user;
 
   test.beforeAll(async () => {
+    user = await createUserValidBody();
     const requestContext = await request.newContext();
     const response = await createUser(requestContext, user);
     expect(response.ok()).toBeTruthy();
@@ -31,6 +33,6 @@ test.describe("Login", () => {
 
   test("User sees error with invalid credentials - Negative", async ({ page }) => {
     await login.login("wrong@example.com", "wrongpass");
-    await errors.expectInvalidBirthdateError();
+    await errors.expectInvalidCredentialsError();
   });
 });
